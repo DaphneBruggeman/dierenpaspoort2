@@ -1,26 +1,62 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DierenController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+require __DIR__.'/auth.php';
+
+//
+// Publieke routes
+//
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dieren.index');
 });
 
-Route::get('/dieren', [DierenController::class, 'index']);
+Route::get('/dieren', [DierenController::class, 'index'])
+    ->name('dieren.index');
 
-Route::get('/dieren/nieuw', [DierenController::class, 'create']);
-Route::post('/dieren', [DierenController::class, 'store']);
+//
+// Admin routes
+//
 
-Route::get('/dieren/{animal}', [DierenController::class, 'show']);
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/dieren/create', [DierenController::class, 'create'])
+        ->name('dieren.create');
+
+    Route::get('/dieren/{animal}/edit', [DierenController::class, 'edit'])
+        ->name('dieren.edit');
+
+    Route::put('/dieren/{animal}', [DierenController::class, 'update'])
+        ->name('dieren.update');
+
+    Route::delete('/dieren/{animal}', [DierenController::class, 'destroy'])
+        ->name('dieren.destroy');
+
+    Route::post('/dieren', [DierenController::class, 'store'])
+        ->name('dieren.store');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+
+    Route::get('/admin/dieren', [DierenController::class, 'adminIndex'])
+        ->name('admin.dieren.index');
+
+});
+
+
+
+Route::get('/dieren/{animal}', [DierenController::class, 'show'])
+    ->name('dieren.show');

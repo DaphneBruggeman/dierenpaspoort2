@@ -11,11 +11,11 @@ class DierenController extends Controller
     {
         $animals = Animal::all();
 
-        return view('index', compact('animals'));
+        return view('dieren.index', compact('animals'));
     }
     public function create()
     {
-        return view('create');
+        return view('dieren.create');
     }
 
 
@@ -45,9 +45,63 @@ class DierenController extends Controller
     }
     public function show(Animal $animal)
     {
-        return view('show', [
+        return view('dieren.show', [
             'animal' => $animal
         ]);
     }
+    public function adminIndex()
+    {
+        $animals = Animal::all();
+
+        return view('admin.index', compact('animals'));
+    }
+
+    public function edit(Animal $animal)
+    {
+        return view('dieren.edit', compact('animal'));
+    }
+
+    public function update(Request $request, Animal $animal)
+    {
+        $request->validate([
+            'naam' => 'required',
+            'geboortedatum' => 'required|date',
+            'soort' => 'required',
+            'geslacht' => 'required',
+            'kleur' => 'nullable',
+            'locatie' => 'nullable',
+            'eten' => 'nullable',
+            'weetje' => 'nullable',
+            'foto' => 'nullable|image',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $path = $request->file('foto')->store('dieren', 'public');
+            $animal->foto = $path;
+        }
+
+        $animal->naam = $request->naam;
+        $animal->geboortedatum = $request->geboortedatum;
+        $animal->soort = $request->soort;
+        $animal->geslacht = $request->geslacht;
+        $animal->kleur = $request->kleur;
+        $animal->locatie = $request->locatie;
+        $animal->eten = $request->eten;
+        $animal->weetje = $request->weetje;
+
+        $animal->save();
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Dier succesvol aangepast.');
+    }
+    public function destroy(Animal $animal)
+    {
+        $animal->delete();
+
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Dier succesvol verwijderd.');
+    }
 }
+
 

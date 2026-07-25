@@ -19,4 +19,8 @@ class Animal extends Model
         'foto',
         'qr_code',
     ];
+
+    public static function findOrFail($id)
+    {
+    }
 }

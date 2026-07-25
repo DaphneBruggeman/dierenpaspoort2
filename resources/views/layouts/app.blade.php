@@ -1,83 +1,36 @@
 <!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Dierenpaspoort</title>
+        <title>Dierenpaspoort</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        .container {
-            max-width: 500px;
-            margin: auto;
-        }
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-[#F5F1E8]">
+            @include('layouts.navigation')
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-white dark:bg-gray-800 shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
 
-        h1 {
-            text-align: center;
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-
-        img {
-            width: 100%;
-            border-radius: 15px;
-        }
-
-        .button {
-            display: block;
-            text-align: center;
-            background: #4CAF50;
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            text-decoration: none;
-            margin-top: 15px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .card h2 {
-            margin-bottom: 5px;
-        }
-
-        .card p {
-            color: #555;
-
-        }
-
-    </style>
-</head>
-
-<body>
-
-<div class="container">
-
-    @yield('content')
-
-</div>
-
-</body>
-</html><?php
+            <!-- Page Content -->
+            <main>
+                @yield('content')
+            </main>
+        </div>
+    </body>
+</html>
