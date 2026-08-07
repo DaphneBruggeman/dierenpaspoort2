@@ -8,7 +8,7 @@
             <div class="mb-8">
 
                 <h1 class="text-3xl font-bold text-[#4F6F52]">
-                    🐾 Dashboard
+                    Dashboard
                 </h1>
 
                 <p class="mt-2 text-gray-700">
@@ -68,8 +68,9 @@
 
 
                 <!-- QR codes -->
-                <div
-                    class="rounded-3xl bg-white p-6 shadow-lg"
+                <a
+                    href="{{ route('admin.qr-codes') }}"
+                    class="rounded-3xl bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
                 >
 
                     <div class="text-4xl">
@@ -84,7 +85,7 @@
                         Bekijk en beheer de QR-codes van dieren.
                     </p>
 
-                </div>
+                </a>
 
 
             </div>

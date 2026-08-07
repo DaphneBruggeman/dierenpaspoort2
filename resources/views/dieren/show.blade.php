@@ -88,7 +88,6 @@
 
                     </div>
 
-
                     <a
                         href="/dieren"
                         class="mt-8 inline-block rounded-full bg-[#4F6F52] px-6 py-3 font-semibold text-white transition hover:bg-[#3B543E]"

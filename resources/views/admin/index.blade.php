@@ -11,7 +11,7 @@
 
                 <div>
                     <h1 class="text-3xl font-bold text-[#4F6F52]">
-                        🐾 Dieren beheren
+                        Dieren beheren
                     </h1>
 
                     <p class="mt-2 text-gray-600">
@@ -78,25 +78,25 @@
 
 
 
-                        <div class="flex gap-3">
+                        <div class="flex flex-col gap-3 sm:flex-row">
 
 
-                            <a
-                                href="{{ route('dieren.show', $animal->id) }}"
-                                class="rounded-full bg-gray-100 px-4 py-2"
+                            <a href="{{ route('dieren.show', [
+    'soort' => Str::slug($animal->soort),
+    'animal' => $animal->slug
+]) }}"
+                               class="rounded-full bg-gray-100 px-4 py-2 text-center sm:w-auto"
                             >
                                 Bekijken
                             </a>
-
-                            <a
-                                href="{{ route('dieren.edit', ['animal' => $animal->id]) }}"
-                                class="rounded-full bg-[#DDE8C7] px-4 py-2 text-[#4F6F52]"
-                            >
-                                ✏️ Bewerken
+                            <a href="{{ route('dieren.edit', ['animal' => $animal->id]) }}"
+                               class="rounded-full bg-[#DDE8C7] px-4 py-2 text-center sm:w-auto">
+                                Bewerken
                             </a>
 
                             <form action="{{ route('dieren.destroy', $animal) }}"
                                   method="POST"
+                                  class="w-full sm:w-auto"
                                   onsubmit="return confirm('Weet je zeker dat je dit dier wilt verwijderen?');">
 
                                 @csrf
@@ -104,7 +104,7 @@
 
                                 <button
                                     type="submit"
-                                    class="rounded-full bg-[#B85C5C] px-4 py-2 text-white">
+                                    class="w-full rounded-full bg-[#B85C5C] px-4 py-2 text-center text-white sm:w-auto">
                                     Verwijderen
                                 </button>
 

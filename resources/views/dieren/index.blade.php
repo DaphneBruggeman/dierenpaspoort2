@@ -11,6 +11,49 @@
                     Ontdek de dieren van onze boerderij!
                 </h1>
             </div>
+            <div class="mb-8 flex flex-wrap justify-center gap-3">
+
+                <a href="{{ route('dieren.index') }}"
+                   class="rounded-full px-5 py-3 font-semibold transition
+   {{ $gekozenSoort === null
+        ? 'bg-[#4F6F52] text-white'
+        : 'bg-gray-200 hover:bg-gray-300 text-gray-700' }}">
+                    🐾 Alle dieren
+                </a>
+
+                @foreach($soorten as $categorie)
+
+                    <a href="{{ route('dieren.filter', Str::slug($categorie)) }}"
+                       class="rounded-full px-5 py-3 font-semibold transition
+       {{ strtolower($gekozenSoort) === strtolower($categorie)
+            ? 'bg-[#4F6F52] text-white'
+            : 'bg-[#DDE8C7] text-[#4F6F52] hover:bg-[#C8D8AE]' }}">
+
+                        @switch($categorie)
+                            @case('Paard')
+                            🐴
+                            @break
+
+                            @case('Geit')
+                            🐐
+                            @break
+
+                            @case('Konijn')
+                            🐇
+                            @break
+
+                            @default
+                            🐾
+                        @endswitch
+
+                        {{ $categorie }}
+
+                    </a>
+
+                @endforeach
+
+            </div>
+
 
 
             <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -52,14 +95,13 @@
                                 {{ $animal->weetje }}
                             </p>
 
-
-                            <a
-                                href="/dieren/{{ $animal->id }}"
-                                class="mt-6 inline-block rounded-full bg-[#4F6F52] px-6 py-3 font-semibold text-white transition hover:bg-[#3B543E]"
-                            >
-                                Bekijk paspoort →
+                            <a class="mt-6 inline-block rounded-full bg-[#4F6F52] px-6 py-3 font-semibold text-white transition hover:bg-[#3B543E]"
+                                href="{{ route('dieren.show', [
+    'soort' => Str::slug($animal->soort),
+    'animal' => $animal->slug
+]) }}">
+                                Bekijk paspoort
                             </a>
-
                         </div>
 
                     </div>

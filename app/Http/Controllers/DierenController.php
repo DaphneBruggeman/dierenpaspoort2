@@ -11,7 +11,27 @@ class DierenController extends Controller
     {
         $animals = Animal::all();
 
-        return view('dieren.index', compact('animals'));
+        $soorten = Animal::select('soort')
+            ->distinct()
+            ->orderBy('soort')
+            ->pluck('soort');
+
+        $gekozenSoort = null;
+
+        return view('dieren.index', compact('animals', 'soorten', 'gekozenSoort'));
+    }
+
+    public function filter($soort)
+    {
+        $animals = Animal::where('soort', ucfirst($soort))->get();
+
+        $soorten = Animal::select('soort')
+            ->distinct()
+            ->orderBy('soort')
+            ->pluck('soort');
+
+        $gekozenSoort = ucfirst($soort);
+        return view('dieren.index', compact('animals', 'soorten', 'gekozenSoort'));
     }
     public function create()
     {
@@ -43,11 +63,13 @@ class DierenController extends Controller
 
         return redirect('/dieren');
     }
-    public function show(Animal $animal)
+    public function show($soort, $animal)
     {
-        return view('dieren.show', [
-            'animal' => $animal
-        ]);
+        $animal = Animal::where('slug', $animal)
+            ->where('soort', ucfirst($soort))
+            ->firstOrFail();
+
+        return view('dieren.show', compact('animal'));
     }
     public function adminIndex()
     {

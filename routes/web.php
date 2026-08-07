@@ -3,19 +3,10 @@
 use App\Http\Controllers\DierenController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 require __DIR__.'/auth.php';
 
-//
-// Publieke routes
-//
-
-Route::get('/', function () {
-    return redirect()->route('dieren.index');
-});
-
-Route::get('/dieren', [DierenController::class, 'index'])
-    ->name('dieren.index');
 
 //
 // Admin routes
@@ -54,9 +45,41 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/dieren', [DierenController::class, 'adminIndex'])
         ->name('admin.dieren.index');
 
+    Route::get('/admin/qr-codes', function () {
+        $animals = \App\Models\Animal::all();
+
+        return view('admin.qr-codes', compact('animals'));
+    })->name('admin.qr-codes');
+
+    Route::get('/admin/qr-codes/{animal}/download', function (\App\Models\Animal $animal) {
+
+        return response(
+            QrCode::format('svg')
+                ->size(500)
+                ->generate(route('dieren.show', [
+                    'soort' => Str::slug($animal->soort),
+                    'animal' => $animal->slug
+                ]))
+        )
+            ->header('Content-Type', 'image/svg+xml')
+            ->header(
+                'Content-Disposition',
+                'attachment; filename="QR-'.$animal->naam.'.svg"'
+            );
+
+    })->name('admin.qr-download');
+
 });
 
+Route::get('/', function () {
+    return redirect()->route('dieren.index');
+});
 
+Route::get('/dieren', [DierenController::class, 'index'])
+    ->name('dieren.index');
 
-Route::get('/dieren/{animal}', [DierenController::class, 'show'])
+Route::get('/dieren/soort/{soort}', [DierenController::class, 'filter'])
+    ->name('dieren.filter');
+
+Route::get('/dieren/{soort}/{animal}', [DierenController::class, 'show'])
     ->name('dieren.show');

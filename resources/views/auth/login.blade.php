@@ -7,7 +7,7 @@
             <div class="mb-8 text-center">
 
                 <h1 class="text-3xl font-bold text-[#4F6F52]">
-                    🐾 Dierenpaspoort
+                    Dierenpaspoort
                 </h1>
 
                 <p class="mt-2 text-gray-600">
@@ -79,7 +79,7 @@
                 <button
                     class="mt-8 w-full rounded-full bg-[#4F6F52] py-4 font-bold text-white transition hover:bg-[#3B543E]"
                 >
-                    🐾 Inloggen
+                     Inloggen
                 </button>
 
 
