@@ -36,7 +36,11 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN npm ci
 
 # Vite/Tailwind build
+RUN npm ci
 RUN npm run build
+
+RUN php artisan config:clear
+RUN php artisan cache:clear
 
 # Laravel permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
