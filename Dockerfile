@@ -1,12 +1,13 @@
 FROM php:8.2-apache
 
-# Benodigde PHP-extensies en tools
+# PHP-extensies en benodigde tools
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
     libzip-dev \
     unzip \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql gd zip \
     && rm -rf /var/lib/apt/lists/*
@@ -25,16 +26,14 @@ RUN a2enmod rewrite
 
 WORKDIR /var/www/html
 
+# Hele Laravel-project kopiëren
+COPY . .
+
 # Composer dependencies
-COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # NPM dependencies
-COPY package.json package-lock.json ./
 RUN npm ci
-
-# Rest van de Laravel-app
-COPY . .
 
 # Vite/Tailwind build
 RUN npm run build
@@ -42,7 +41,7 @@ RUN npm run build
 # Laravel permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Apache moet naar Laravel public/
+# Apache naar Laravel public/
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
