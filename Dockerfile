@@ -39,9 +39,6 @@ RUN npm ci
 RUN npm ci
 RUN npm run build
 
-RUN php artisan config:clear
-RUN php artisan cache:clear
-
 # Laravel permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
