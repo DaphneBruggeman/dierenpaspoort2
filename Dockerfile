@@ -41,8 +41,9 @@ RUN npm ci
 RUN npm run build
 
 # Laravel permissions
-RUN chown -R www-data:www-data storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+RUN mkdir -p public/storage/dieren \
+    && chown -R www-data:www-data storage bootstrap/cache public/storage \
+    && chmod -R 775 storage bootstrap/cache public/storage
 
 # Apache naar Laravel public/
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
