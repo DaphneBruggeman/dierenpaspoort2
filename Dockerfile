@@ -1,5 +1,9 @@
 FROM php:8.2-apache
 
+# PHP uploadlimieten
+RUN echo "upload_max_filesize=20M" > /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "post_max_size=25M" >> /usr/local/etc/php/conf.d/uploads.ini
+
 # PHP-extensies en benodigde tools
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
@@ -31,9 +35,6 @@ COPY . .
 
 # Composer dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# NPM dependencies
-RUN npm ci
 
 # Vite/Tailwind build
 RUN npm ci

@@ -40,11 +40,32 @@ class DierenController extends Controller
 
     public function store(Request $request)
     {
-        dd(
-            $request->all(),
-            $request->file('foto'),
-            $request->hasFile('foto')
-        );
+        $fotoPad = null;
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $file->move(public_path('storage/dieren'), $filename);
+
+            $fotoPad = 'dieren/' . $filename;
+        }
+
+        Animal::create([
+            'naam' => $request->naam,
+            'geboortedatum' => $request->geboortedatum,
+            'soort' => $request->soort,
+            'geslacht' => $request->geslacht,
+            'kleur' => $request->kleur,
+            'locatie' => $request->locatie,
+            'eten' => $request->eten,
+            'weetje' => $request->weetje,
+            'qr_code' => uniqid(),
+            'foto' => $fotoPad,
+        ]);
+
+        return redirect('/dieren');
     }
     public function show($soort, $animal)
     {
