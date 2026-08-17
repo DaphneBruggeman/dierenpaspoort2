@@ -44,8 +44,13 @@ class DierenController extends Controller
         $fotoPad = null;
 
         if ($request->hasFile('foto')) {
-            $fotoPad = $request->file('foto')
-                ->store('dieren', 'public');
+            $file = $request->file('foto');
+
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $file->move(public_path('storage/dieren'), $filename);
+
+            $fotoPad = 'dieren/' . $filename;
         }
 
         Animal::create([
