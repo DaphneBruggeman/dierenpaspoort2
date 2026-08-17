@@ -29,7 +29,36 @@ class Animal extends Model
         parent::boot();
 
         static::creating(function ($animal) {
-            $animal->slug = Str::slug($animal->naam);
+            $animal->slug = static::uniqueSlug($animal->naam);
         });
+
+        static::updating(function ($animal) {
+            if ($animal->isDirty('naam')) {
+                $animal->slug = static::uniqueSlug(
+                    $animal->naam,
+                    $animal->id
+                );
+            }
+        });
+    }
+
+    protected static function uniqueSlug($naam, $ignoreId = null)
+    {
+        $baseSlug = Str::slug($naam);
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (
+        static::where('slug', $slug)
+            ->when($ignoreId, function ($query) use ($ignoreId) {
+                $query->where('id', '!=', $ignoreId);
+            })
+            ->exists()
+        ) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 }
