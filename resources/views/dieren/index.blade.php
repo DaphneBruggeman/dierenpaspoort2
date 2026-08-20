@@ -18,7 +18,7 @@
    {{ $gekozenSoort === null
         ? 'bg-[#4F6F52] text-white'
         : 'bg-gray-200 hover:bg-gray-300 text-gray-700' }}">
-                    🐾 Alle dieren
+                    Alle dieren
                 </a>
 
                 @foreach($soorten as $categorie)
@@ -73,34 +73,35 @@
                         @else
 
                             <div class="flex h-64 items-center justify-center bg-[#A9C46C] text-6xl">
-                                🐾
                             </div>
 
                         @endif
 
 
-                        <div class="p-6">
+                        <div class="p-6 gap-2 flex justify-start items-start flex-col">
 
                             <h2 class="text-2xl font-bold text-[#4F6F52]">
                                 {{ $animal->naam }}
                             </h2>
 
 
-                            <p class="mt-2 text-gray-600">
-                                🐾 {{ $animal->soort }}
+                            <p class=" text-gray-600">
+                                {{ $animal->soort }}
                             </p>
 
 
-                            <p class="mt-4 text-gray-700">
+                            <p class=" text-gray-700 min-h-14 max-h-full">
                                 {{ $animal->weetje }}
                             </p>
 
-                            <a class="mt-6 inline-block rounded-full bg-[#4F6F52] px-6 py-3 font-semibold text-white transition hover:bg-[#3B543E]"
+                            <a class="max-md:w-full w-fit inline-block rounded-full bg-[#4F6F52] px-6 py-3 font-semibold text-white transition hover:bg-[#3B543E]"
                                 href="{{ route('dieren.show', [
     'soort' => Str::slug($animal->soort),
     'animal' => $animal->slug
 ]) }}">
+                                <span class="flex justify-center">
                                 Bekijk paspoort
+                                    </span>
                             </a>
                         </div>
 

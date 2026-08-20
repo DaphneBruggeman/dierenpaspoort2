@@ -29,9 +29,7 @@
                     class="rounded-3xl bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
                 >
 
-                    <div class="text-4xl">
-                        🐄
-                    </div>
+
 
                     <h2 class="mt-4 text-xl font-bold text-[#4F6F52]">
                         Dieren bekijken
@@ -51,10 +49,6 @@
                     class="rounded-3xl bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
                 >
 
-                    <div class="text-4xl">
-                        ➕
-                    </div>
-
                     <h2 class="mt-4 text-xl font-bold text-[#4F6F52]">
                         Nieuw dier toevoegen
                     </h2>
@@ -72,10 +66,6 @@
                     href="{{ route('admin.qr-codes') }}"
                     class="rounded-3xl bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
                 >
-
-                    <div class="text-4xl">
-                        📱
-                    </div>
 
                     <h2 class="mt-4 text-xl font-bold text-[#4F6F52]">
                         QR-codes
