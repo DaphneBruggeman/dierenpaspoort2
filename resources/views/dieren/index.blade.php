@@ -73,6 +73,22 @@
                         @else
 
                             <div class="flex h-64 items-center justify-center bg-[#A9C46C] text-6xl">
+                                @switch($animal->soort)
+                                    @case('Paard')
+                                    🐴
+                                    @break
+
+                                    @case('Geit')
+                                    🐐
+                                    @break
+
+                                    @case('Konijn')
+                                    🐇
+                                    @break
+
+                                    @default
+                                    🐾
+                                @endswitch
                             </div>
 
                         @endif
