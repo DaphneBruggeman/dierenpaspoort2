@@ -1,5 +1,4 @@
 @extends('layouts.app')
-use Illuminate\Support\Facades\Storage;
 
 @section('content')
 
@@ -63,7 +62,7 @@ use Illuminate\Support\Facades\Storage;
 
                     <div class="overflow-hidden rounded-3xl bg-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
 
-                        @if($animal->foto && Storage::disk('public')->exists($animal->foto))
+                        @if($animal->foto)
 
                             <img
                                 src="{{ asset('storage/' . $animal->foto) }}"
@@ -93,6 +92,7 @@ use Illuminate\Support\Facades\Storage;
                             </div>
 
                         @endif
+
 
                         <div class="p-6 gap-2 flex justify-start items-start flex-col">
 
