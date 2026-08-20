@@ -90,6 +90,7 @@ Bezoekers kunnen dieren bekijken door:
 
 rechtstreeks naar een dierenpagina te gaan
 een QR-code bij een dier te scannen
+
 Admin
 
 Admins kunnen:
